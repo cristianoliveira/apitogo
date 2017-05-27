@@ -1,4 +1,6 @@
 # apitogo
+<img src="https://cdn.rawgit.com/cristianoliveira/apitogo/ce7577f6/apitogo.svg" width="200" align="center"/>  
+
 An api to go, please. Generate a fake api without a line of code.
 
 
