@@ -1,8 +1,7 @@
 # apitogo
 <img src="https://cdn.rawgit.com/cristianoliveira/apitogo/9112716a/apitogo.svg?q=1" width="200" align="center"/>  
 
-An api to go, please. Generate a fake api without a line of code.
-
+'An api to go, please." Make a fake api without a line of code for development purposes
 
 # Usage
 
