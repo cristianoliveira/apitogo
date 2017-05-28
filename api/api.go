@@ -5,6 +5,7 @@ import (
 	"log"
 	"net/http"
 	"strconv"
+	"path/filepath"
 
 	"github.com/gorilla/mux"
 )
@@ -24,10 +25,16 @@ func Router() http.Handler {
   return router
 }
 
-func Serve(files []string, config Settings) {
-  settings = config
+func Serve(s Settings) {
+  settings = s
 
-	fmt.Println("Server listening on: http://0.0.0.0:" + settings.Port)
+	files, err := filepath.Glob(settings.Dir + "/*.json")
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	fmt.Println("Server listening on: http://0.0.0.0:" + settings.Port, "\n")
+  fmt.Println("Endpoints for this folder:")
 
 	for _, file := range files {
 		endpoint := "/" + file[:len(file)-5]

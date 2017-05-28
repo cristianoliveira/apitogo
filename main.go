@@ -1,14 +1,11 @@
 package main
 
 import (
-	"fmt"
-	"log"
-	"path/filepath"
-
 	"github.com/docopt/docopt-go"
-
 	"github.com/cristianoliveira/apitogo/api"
 )
+
+const VERSION = "0.1.0"
 
 // Default values
 var settings api.Settings = api.Settings{
@@ -20,24 +17,23 @@ const USAGE string = `Api to go, please.
 
 Usage:
   apitogo run
-  apitogo run [--port=<port>|--dir=<dir>]
+  apitogo run [-p <port>] [--dir <dir>]
   apitogo -h | --help
   apitogo --version
 
 Options:
-  --dir=<dir>   Dir containing the json files.
-  --port=<port> Server port (Default 8080).
+  --dir <dir>   Directory containing the json files.
+  -p <port>     Server port (Default 8080).
   -h --help     Show this screen.
   --version     Show version.
 `
 
 func main() {
-	arguments, _ := docopt.Parse(USAGE, nil, true, "Naval Fate 2.0", false)
-	fmt.Println(arguments)
+	arguments, _ := docopt.Parse(USAGE, nil, true, "apitogo " + VERSION, false)
 
 	portArg := arguments["--port"]
 	if portArg != nil {
-		settings.Port = ":" + portArg.(string)
+		settings.Port = portArg.(string)
 	}
 
 	dirArg := arguments["--dir"]
@@ -45,10 +41,5 @@ func main() {
 		settings.Dir = dirArg.(string)
 	}
 
-	files, err := filepath.Glob(settings.Dir + "/*.json")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	api.Serve(files, settings)
+	api.Serve(settings)
 }
