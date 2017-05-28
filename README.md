@@ -1,5 +1,5 @@
 # apitogo
-<img src="https://cdn.rawgit.com/cristianoliveira/apitogo/9112716a/apitogo.svg?q=1" width="200" align="center"/>
+<img src="https://cdn.rawgit.com/cristianoliveira/apitogo/9112716a/apitogo.svg?q=1" width="150" align="center" style="float: left"/>
 
 'An api to go, please." Make a fake api without a line of code for development purposes
 
@@ -11,14 +11,14 @@ Take a look on the desired features below. Help/suggestion are appreciated. Feel
 
 There are two motivations that made me create this project:
 
-  - Each time I need to create some SPA for an API that os designed but still
+  - Each time I need to create some SPA for an API that was designed but still
 not implemented I need to create my on server to provide the data that I need to test.
 
   - Each time that I have an project that uses Third Part apis I have problems to run it
 locally.
 
 That why I am working on this project so next time that I need some simple API
-I going to use this tool to launch one instance to go.
+I going to use this tool to launch one api to go.
 
 # Usage
 
