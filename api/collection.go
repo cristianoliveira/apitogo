@@ -47,10 +47,7 @@ func (c *Collection) GetById(id float64) *Collection {
 		}
 	}
 
-  return &Collection {
-    path: c.path,
-    data: nil,
-  }
+  return &Collection { path: c.path, data: nil }
 }
 
 func CollectionLoad(path string) (*Collection, error) {

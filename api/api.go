@@ -10,7 +10,7 @@ import (
 )
 
 type Settings struct {
-	Port      string
+	Port string
 	Dir string
 }
 

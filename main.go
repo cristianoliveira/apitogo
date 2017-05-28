@@ -2,7 +2,7 @@ package main
 
 import (
 	"fmt"
-  "log"
+	"log"
 	"path/filepath"
 
 	"github.com/docopt/docopt-go"
@@ -13,7 +13,7 @@ import (
 // Default values
 var settings api.Settings = api.Settings{
 	Port: "8080",
-	Dir: "./",
+	Dir:  "./",
 }
 
 const USAGE string = `Api to go, please.
@@ -50,5 +50,5 @@ func main() {
 		log.Fatal(err)
 	}
 
-  api.Serve(files, settings)
+	api.Serve(files, settings)
 }
