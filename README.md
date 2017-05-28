@@ -3,16 +3,29 @@
 
 'An api to go, please." Make a fake api without a line of code for development purposes
 
-**This is project is currently in working in progress**
+**Working in progress**
 
 Take a look on the desired features below. Help/suggestion are appreciated. Feel free to open an issue with any suggestion.
+
+# Motivation
+
+There are two motivations that made me create this project:
+
+  - Each time I need to create some SPA for an API that os designed but still
+not implemented I need to create my on server to provide the data that I need to test.
+
+  - Each time that I have an project that uses Third Part apis I have problems to run it
+locally.
+
+That why I am working on this project so next time that I need some simple API
+I going to use this tool to launch one instance to go.
 
 # Usage
 
 Create a collection file inside the folder, for instance, `posts.json`
 ```json
 {
-  "posts": [
+  "data": [
     { "id": 1, "title": "Some post" },
     { "id": 2, "title": "Awesome post" },
     { "id": 3, "title": "Another post" }
@@ -39,10 +52,13 @@ it is going to create a endpoint like that:
     - [ ] Query by parameters
     - [ ] Restfull Api (GET, POST, PUT, DELETE)
     - [ ] Sort
+    - [ ] Limit
     - [ ] Other Formats? (xml)
+    - [ ] Follow json:api standards
 
  - Authentication
-    - [ ] oauth2
+    - [ ] Basic (user/password)
+    - [ ] oauth2 (token)
     - [ ] Custom Clients ID/Keys
     - [ ] Login Page
 
@@ -53,6 +69,9 @@ it is going to create a endpoint like that:
  - Distribution
     - [ ] Installation pack for brew
     - [ ] Installation Script for linux
+
+ - Others
+    - [ ] Travis
 
 ## Contributing
 
