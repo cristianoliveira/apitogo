@@ -19,6 +19,10 @@ var settings Settings
 
 func Router() http.Handler {
 	router := mux.NewRouter().StrictSlash(true)
+
+	router.HandleFunc("/authorize", HandleAuthorization)
+	router.HandleFunc("/token", HandleToken)
+
 	router.HandleFunc("/{collection}", getAll)
 	router.HandleFunc("/{collection}/{id}", getById)
 
