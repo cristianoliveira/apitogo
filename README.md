@@ -22,7 +22,7 @@ I going to use this tool to launch one instance to go.
 
 # Usage
 
-Create a collection file inside the folder, for instance, `posts.json`
+Create a collection file inside the folder, for instance, `posts.json` with the follow format:
 ```json
 {
   "data": [
@@ -38,11 +38,23 @@ Run the apitogo in the same folder:
 apitogo run
 ```
 
-It runs by default at port 8080 and for each json file inside the folder
+And that it! Here are your api to go, sir.
+
+It runs by default at port `8080` and for each json file inside the folder
 it is going to create a endpoint like that:
 
    - `/posts` returns all data from inside the file
-   - `/posts/id` returns an object from inside the file
+   - `/posts/:id` returns an object from inside the file
+
+Try out:
+
+```bash
+curl -XGET http://localhost:8080/posts
+```
+Or
+```bash
+curl -XGET http://localhost:8080/posts/1
+```
 
 # Future implementations
 
