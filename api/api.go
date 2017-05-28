@@ -46,6 +46,12 @@ func Serve(s Settings) {
 		fmt.Println(endpoint + "/:id")
 	}
 
+  fmt.Println("")
+  fmt.Println("Endpoints for oauth2:")
+	fmt.Println("/authorize")
+	fmt.Println("/token")
+  fmt.Println("use client_id: 1234 and client_secret: apitogo1234")
+
 	log.Fatal(http.ListenAndServe("0.0.0.0:" + settings.Port, Router()))
 }
 
