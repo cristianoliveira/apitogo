@@ -1,27 +1,19 @@
 package main
 
 import (
-	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"log"
-	"net/http"
+  "log"
 	"path/filepath"
-	"strconv"
 
 	"github.com/docopt/docopt-go"
-	"github.com/gorilla/mux"
+
+	"github.com/cristianoliveira/apitogo/api"
 )
 
-type Settings struct {
-	port      string
-	directory string
-}
-
 // Default values
-var settings Settings = Settings{
-	port:      "8080",
-	directory: "./",
+var settings api.Settings = api.Settings{
+	Port: "8080",
+	Dir: "./",
 }
 
 const USAGE string = `Api to go, please.
@@ -33,7 +25,7 @@ Usage:
   apitogo --version
 
 Options:
-  --dir=<dir>   Directory containing the json files.
+  --dir=<dir>   Dir containing the json files.
   --port=<port> Server port (Default 8080).
   -h --help     Show this screen.
   --version     Show version.
@@ -45,117 +37,18 @@ func main() {
 
 	portArg := arguments["--port"]
 	if portArg != nil {
-		settings.port = ":" + portArg.(string)
+		settings.Port = ":" + portArg.(string)
 	}
 
 	dirArg := arguments["--dir"]
 	if dirArg != nil {
-		settings.directory = dirArg.(string)
+		settings.Dir = dirArg.(string)
 	}
 
-	files, err := filepath.Glob(settings.directory + "/*.json")
+	files, err := filepath.Glob(settings.Dir + "/*.json")
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	fmt.Println("Server listening on: http://0.0.0.0:" + settings.port)
-	log.Fatal(http.ListenAndServe("0.0.0.0:"+settings.port, route(files)))
-}
-
-func route(files []string) *mux.Router {
-	router := mux.NewRouter().StrictSlash(true)
-
-	for _, file := range files {
-		endpoint := "/" + file[:len(file)-5]
-		fmt.Println(endpoint)
-		fmt.Println(endpoint + "/:id")
-	}
-
-	router.HandleFunc("/{collection}", getAll)
-	router.HandleFunc("/{collection}/{id}", getById)
-
-	return router
-}
-
-func getAll(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-
-	path, err := filepath.Abs(settings.directory)
-	if err != nil {
-		handleBadRequest(w, err)
-		return
-	}
-
-	data, err := ioutil.ReadFile(path + "/" + vars["collection"] + ".json")
-	if err != nil {
-		handleBadRequest(w, err)
-		return
-	}
-
-	if err != nil {
-		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-		w.WriteHeader(http.StatusBadRequest)
-		fmt.Fprintln(w, "Error: ", err)
-	} else {
-		w.WriteHeader(http.StatusOK)
-		w.Write(data)
-	}
-}
-func handleBadRequest(w http.ResponseWriter, err error) {
-	w.WriteHeader(http.StatusBadRequest)
-	fmt.Println(w, err)
-}
-
-func getById(w http.ResponseWriter, r *http.Request) {
-	vars := mux.Vars(r)
-
-	path, err := filepath.Abs(settings.directory)
-	if err != nil {
-		handleBadRequest(w, err)
-		return
-	}
-
-	data, err := ioutil.ReadFile(path + "/" + vars["collection"] + ".json")
-	if err != nil {
-		handleBadRequest(w, err)
-		return
-	}
-
-	pId, err := strconv.ParseFloat(vars["id"], 64)
-	if err != nil {
-		handleBadRequest(w, err)
-		return
-	}
-
-	var jsonData interface{}
-	err = json.Unmarshal(data, &jsonData)
-	if err != nil {
-		handleBadRequest(w, err)
-		return
-	}
-
-	jsonMap := jsonData.(map[string]interface{})
-	items := jsonMap[vars["collection"]].([]interface{})
-
-	matchById := func(i map[string]interface{}) bool { return i["id"] == pId }
-	selected := filter(items, matchById)
-
-	if selected != nil {
-		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-		w.WriteHeader(http.StatusOK)
-		fmt.Fprintln(w, selected)
-	} else {
-		w.WriteHeader(http.StatusNotFound)
-		fmt.Println(w, nil)
-	}
-}
-
-func filter(items []interface{}, isMatch func(map[string]interface{}) bool) map[string]interface{} {
-	for i := range items {
-		if isMatch(items[i].(map[string]interface{})) {
-			return items[i].(map[string]interface{})
-		}
-	}
-
-	return nil
+  api.Serve(files, settings)
 }
