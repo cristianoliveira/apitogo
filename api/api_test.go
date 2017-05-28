@@ -12,14 +12,14 @@ import (
 )
 
 func TestWhenHasCollectionFile(t *testing.T) {
-  err := copyFile("../examples.json", "./examples.json")
+  err := copyFile("../posts.json", "./posts.json")
   if err != nil { t.Error(err) }
 
   router := Router()
   ts := httptest.NewServer(router)
   defer ts.Close()
 
-  resp, err := http.Get(ts.URL + "/examples")
+  resp, err := http.Get(ts.URL + "/posts")
   if err != nil { t.Error(err) }
 
   t.Run("Responds with OK status", func(t *testing.T) {
@@ -36,7 +36,7 @@ func TestWhenHasCollectionFile(t *testing.T) {
     body, err := ioutil.ReadAll(resp.Body)
     if err != nil { t.Error(err) }
 
-    file, err := ioutil.ReadFile("./examples.json")
+    file, err := ioutil.ReadFile("./posts.json")
     if err != nil { t.Error(err) }
 
     result := strings.TrimSpace(string(body))
@@ -49,7 +49,7 @@ func TestWhenHasCollectionFile(t *testing.T) {
 
   t.Run("Provide json data", func(t *testing.T) {
 
-    resp, err := http.Get(ts.URL + "/examples")
+    resp, err := http.Get(ts.URL + "/posts")
     if err != nil { t.Error(err) }
 
     result := resp.Header.Get("Content-Type")
@@ -60,7 +60,7 @@ func TestWhenHasCollectionFile(t *testing.T) {
     }
   })
 
-  os.Remove("./examples.json")
+  os.Remove("./posts.json")
 }
 
 func TestWhenHasNoCollectionFile(t *testing.T) {
@@ -68,7 +68,7 @@ func TestWhenHasNoCollectionFile(t *testing.T) {
   ts := httptest.NewServer(router)
   defer ts.Close()
 
-  resp, err := http.Get(ts.URL + "/examples")
+  resp, err := http.Get(ts.URL + "/posts")
   if err != nil { t.Error(err) }
 
   t.Run("Responds with Bad Request", func(t *testing.T) {
@@ -92,7 +92,7 @@ func TestWhenHasNoCollectionFile(t *testing.T) {
 
   t.Run("Provide error cause", func(t *testing.T) {
     body, err := ioutil.ReadAll(resp.Body)
-    _, err = ioutil.ReadFile("./examples.json")
+    _, err = ioutil.ReadFile("./posts.json")
 
     result := string(body)
     expected := fmt.Sprintln(err)

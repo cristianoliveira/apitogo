@@ -11,14 +11,14 @@ func TestCreatingWithWrongPath(t *testing.T) {
 }
 
 func TestWhenHasFile(t *testing.T) {
-  collection, err := CollectionLoad("../examples.json")
+  collection, err := CollectionLoad("../posts.json")
   if err != nil {
     t.Error("it must not contain error")
   }
 
 
   t.Run("Its name is the same as filename", func(tt *testing.T) {
-    expected := "examples"
+    expected := "posts"
     result := collection.Name()
 
     if expected != result {
@@ -26,8 +26,8 @@ func TestWhenHasFile(t *testing.T) {
     }
   })
 
-  t.Run("Its contains collection with the same name", func(tt *testing.T) {
-    data := collection.Get("examples")
+  t.Run("Its contains collection with the name `data`", func(tt *testing.T) {
+    data := collection.Get("data")
 
     if data == nil {
       t.Error("It must contain data")
@@ -35,18 +35,7 @@ func TestWhenHasFile(t *testing.T) {
   })
 
   t.Run("Its contains more than one items", func(tt *testing.T) {
-    items := collection.GetAsList("examples")
-
-    expected := 4
-    result := len(items)
-
-    if expected != result {
-      tt.Errorf("Expected %d got %d", expected, result)
-    }
-  })
-
-  t.Run("Its contains more than one items", func(tt *testing.T) {
-    items := collection.GetAsList("examples")
+    items := collection.GetAsList("data")
 
     expected := 4
     result := len(items)

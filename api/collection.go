@@ -35,7 +35,9 @@ func (c *Collection) GetAsList(key string) ([]interface{}) {
 }
 
 func (c *Collection) GetById(id float64) *Collection {
-	for i := range c.GetAsList("data") {
+  items := c.GetAsList("data")
+
+	for i := range items {
     item := items[i].(map[string]interface{})
 		if item["id"] == id {
       return &Collection {
