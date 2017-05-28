@@ -57,6 +57,15 @@ Or
 curl -XGET http://localhost:8080/posts/1
 ```
 
+## Authentication API
+
+It implements a basic oauth2 server also you can you for development
+
+   - `/authorize` for webclients authorizations
+   - `/token` for token requests
+
+Default client_id: `1234` and client_secret: `apitogo1234`
+
 # Future implementations
 
  - API
