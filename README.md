@@ -1,28 +1,31 @@
 # apitogo
-<p align="center">
+<p align="center" >
 <img src="https://cdn.rawgit.com/cristianoliveira/apitogo/9112716a/apitogo.svg?q=1" width="150" align="center" />
-<span>"An api to go, please."</span> <br>Make a fake api without a line of code for development purposes
+<strong>"An api to go, please."</strong> 
 </p>
+<p align="center">Make a fake api without a line of code for development purposes</p>
 
 **Working in progress**
 
-Take a look on the desired features below. Help/suggestion are appreciated. Feel free to open an issue with any suggestion.
+Take a look on the desired features below. Help/suggestions are appreciated. Feel free to open an issue with any suggestion.
 
 # Motivation
 
 There are two motivations that made me create this project:
 
-  - Each time I need to create some SPA for an API that was designed but still
-not implemented I need to create my on server to provide the data that I need to test.
+  - Prototyping SPAs.
+  
+  Each time that I need to create a SPA for a API that was designed but still not implemented I need to create my on server to provide the data needed to test.
+  
+  - Third Part APIs running locally 
+  
+  Each time that I have an project that relies on Third part apis I have problems to run it locally.
 
-  - Each time that I have an project that uses Third Part apis I have problems to run it
-locally.
-
-That why I am working on this project so next time that I need some simple API
-I going to use this tool to launch one api to go.
+That's why I am working on this project so next time that I need some simple API I gonna just get an api to go.
 
 # Usage
 
+## Json Api
 Create a collection file inside the folder, for instance, `posts.json` with the follow format:
 ```json
 {
@@ -35,52 +38,57 @@ Create a collection file inside the folder, for instance, `posts.json` with the 
 ```
 
 Run the apitogo in the same folder:
+
 ```bash
 apitogo run
 ```
 
-And that it! Here are your api to go, sir.
-
-It runs by default at port `8080` and for each json file inside the folder
-it is going to create a endpoint like that:
-
-   - `/posts` returns all data from inside the file
-   - `/posts/:id` returns an object from inside the file
-
-Try out:
+That's it! Here is your api to go, sir. Try out:
 
 ```bash
 curl -XGET http://localhost:8080/posts
 ```
+
 Or
+
 ```bash
 curl -XGET http://localhost:8080/posts/1
 ```
 
+
+It runs by default at port `8080` and for each json file inside the folder
+it is going to create a endpoint like this:
+
+   - `/posts` returns all data from inside the file
+   - `/posts/:id` returns an object from inside the file
+
+
 ## Authentication API
 
-It implements a basic oauth2 server also you can you for development
+It implements a basic oauth2 server also you can use for development
 
    - `/authorize` for webclients authorizations
    - `/token` for token requests
 
 Default client_id: `1234` and client_secret: `apitogo1234`
 
+##
+
 # Future implementations
 
- - API
+ - Json API
     - [x] Json endpoint from files
     - [x] Filter by id
     - [ ] Query by parameters
     - [ ] Restfull Api (GET, POST, PUT, DELETE)
     - [ ] Sort
     - [ ] Limit
-    - [ ] Other Formats? (xml)
     - [ ] Follow json:api standards
+    - [ ] Graphql support
 
- - Authentication
+ - Authentication API
+    - [x] Oauth2 (token)
     - [ ] Basic (user/password)
-    - [ ] oauth2 (token)
     - [ ] Custom Clients ID/Keys
     - [ ] Login Page
 
