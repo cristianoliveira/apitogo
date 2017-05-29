@@ -12,30 +12,21 @@ const USAGE string = `Api to go, please.
 
 Usage:
   apitogo run
-  apitogo run [-p <port>] [--dir <dir>]
+  apitogo run [-p <port>] [-d <dir>]
   apitogo -h | --help
   apitogo --version
 
 Options:
-  --dir <dir>   Directory containing the json files.
+  -d <dir>      Directory containing the json files.
   -p <port>     Server port (Default 8080).
   -h --help     Show this screen.
   --version     Show version.
 `
 
 func main() {
-	arguments, _ := docopt.Parse(USAGE, nil, true, "apitogo "+VERSION, false)
-	settings := common.Settings()
+	arguments, _:= docopt.Parse(USAGE, nil, true, "apitogo "+VERSION, false)
 
-	portArg := arguments["--port"]
-	if portArg != nil {
-		settings.Port = portArg.(string)
-	}
-
-	dirArg := arguments["--dir"]
-	if dirArg != nil {
-		settings.Dir = dirArg.(string)
-	}
+	common.Settings().UpdateByArgs(arguments)
 
 	api.Serve()
 }

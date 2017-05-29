@@ -11,6 +11,18 @@ type Setting struct {
 var instance *Setting
 var once sync.Once
 
+func (s *Setting) UpdateByArgs(args map[string]interface{}) {
+	portArg := args["-p"]
+	if portArg != nil {
+		s.Port = portArg.(string)
+	}
+
+	dirArg := args["-d"]
+	if dirArg != nil {
+		s.Dir = dirArg.(string)
+	}
+}
+
 func (s *Setting) PathFile(filename string) string {
 	path, err := filepath.Abs(s.Dir)
 	if err != nil {
