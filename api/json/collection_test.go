@@ -1,4 +1,4 @@
-package api
+package json
 
 import "testing"
 
@@ -11,7 +11,7 @@ func TestCreatingWithWrongPath(t *testing.T) {
 }
 
 func TestWhenHasFile(t *testing.T) {
-  collection, err := CollectionLoad("../posts.json")
+  collection, err := CollectionLoad("../../posts.json")
   if err != nil {
     t.Error("it must not contain error")
   }

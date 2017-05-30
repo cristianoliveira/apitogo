@@ -1,17 +1,12 @@
 package main
 
 import (
-	"github.com/docopt/docopt-go"
 	"github.com/cristianoliveira/apitogo/api"
+	"github.com/cristianoliveira/apitogo/common"
+	"github.com/docopt/docopt-go"
 )
 
 const VERSION = "0.1.0"
-
-// Default values
-var settings api.Settings = api.Settings{
-	Port: "8080",
-	Dir:  "./",
-}
 
 const USAGE string = `Api to go, please.
 
@@ -29,7 +24,8 @@ Options:
 `
 
 func main() {
-	arguments, _ := docopt.Parse(USAGE, nil, true, "apitogo " + VERSION, false)
+	arguments, _ := docopt.Parse(USAGE, nil, true, "apitogo "+VERSION, false)
+	settings := common.Settings()
 
 	portArg := arguments["--port"]
 	if portArg != nil {
@@ -41,5 +37,5 @@ func main() {
 		settings.Dir = dirArg.(string)
 	}
 
-	api.Serve(settings)
+	api.Serve()
 }
