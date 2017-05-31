@@ -1,25 +1,26 @@
 # apitogo
 <p align="center" >
 <img src="https://cdn.rawgit.com/cristianoliveira/apitogo/9112716a/apitogo.svg?q=1" width="150" align="center" />
-<strong>"An api to go, please."</strong> 
+<strong>"An api to go, please."</strong>
 </p>
 <p align="center">Make a fake api without a line of code for development purposes</p>
 
+
 **Working in progress**
 
-Take a look on the desired features below. Help/suggestions are appreciated. Feel free to open an issue with any suggestion.
+Take a look on the desired features below.  Help/suggestions are appreciated.
+
+Feel free to open an issue with any suggestion.
 
 # Motivation
 
 There are two motivations that made me create this project:
 
   - Prototyping SPAs.
-  
-  Each time that I need to create a SPA for a API that was designed but still not implemented I need to create my on server to provide the data needed to test.
-  
-  - Third Part APIs running locally 
-  
-  Each time that I have an project that relies on Third part apis I have problems to run it locally.
+    Each time that I need to create a SPA for an API that was designed but still not implemented I need to create my on server to provide the data needed to test.
+
+  - Third Part APIs running locally
+    Each time that I have a project that relies on third part apis I have problems to run it locally.
 
 That's why I am working on this project so next time that I need some simple API I gonna just get an api to go.
 
