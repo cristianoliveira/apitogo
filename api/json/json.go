@@ -1,31 +1,12 @@
 package json
 
 import (
-	"encoding/json"
-	"fmt"
 	"net/http"
 	"strconv"
 
 	"github.com/cristianoliveira/apitogo/common"
 	"github.com/gorilla/mux"
 )
-
-type Error struct {
-	Code   int      `json:"code"`
-	Errors []string `json:"errors"`
-}
-
-func (e *Error) AsBytes() []byte {
-	data, err := json.Marshal(e)
-	if err != nil {
-		fmt.Println(err)
-	}
-	return data
-}
-
-func NewError(code int, err error) *Error {
-	return &Error{Errors: []string{err.Error()}, Code: code}
-}
 
 func HandleGetAll(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
@@ -41,12 +22,12 @@ func HandleGetAll(w http.ResponseWriter, r *http.Request) {
 
 	data, err := collection.AsBytes()
 	if err != nil {
-		w.WriteHeader(http.StatusBadRequest)
-		w.Write(NewError(http.StatusBadRequest, err).AsBytes())
-	} else {
-		w.WriteHeader(http.StatusOK)
-		w.Write(data)
+		handleNotFound(w, err)
+		return
 	}
+
+	w.WriteHeader(http.StatusOK)
+	w.Write(data)
 }
 
 func HandleGetById(w http.ResponseWriter, r *http.Request) {
