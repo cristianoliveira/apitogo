@@ -6,25 +6,34 @@
 <p align="center">Make a fake api without a line of code for development purposes</p>
 
 
-**Working in progress**
+**Work in progress**
 
-Take a look on the desired features below.  Help/suggestions are appreciated.
+### I wanna help! 
+You can help this project by:
 
-Feel free to open an issue with any suggestion.
+ - Taking a look on the desired features below and implementing it.  
+ 
+ - Help/suggestions are appreciated. Feel free to open an issue with any suggestion.
 
+ - Using and giving feedback
+ 
 # Motivation
 
 There are two motivations that made me create this project:
 
   - Prototyping SPAs.
+  
     Each time that I need to create a SPA for an API that was designed but still not implemented I need to create my on server to provide the data needed to test.
 
   - Third Part APIs running locally
+  
     Each time that I have a project that relies on third part apis I have problems to run it locally.
 
-That's why I am working on this project so next time that I need some simple API I gonna just get an api to go.
+That's why I am working on this app so next time that I need some simple API. I gonna just get an api to go.
 
 # Usage
+
+It implements a bunch of endpoits by default for you to use.
 
 ## Json Api
 Create a collection file inside the folder, for instance, `posts.json` with the follow format:
@@ -92,6 +101,9 @@ Default client_id: `1234` and client_secret: `apitogo1234`
     - [ ] Basic (user/password)
     - [ ] Custom Clients ID/Keys
     - [ ] Login Page
+    
+ - Websocket API
+    - [ ] Create/connect channels
 
  - Customization
     - [ ] Routes
@@ -106,8 +118,6 @@ Default client_id: `1234` and client_secret: `apitogo1234`
 
 ## Contributing
 
-Any suggestion is appreciated! Feel free to open a issue.
-
 If you want to implement a feature, follow this steps:
 
  - Fork it!
@@ -117,6 +127,7 @@ If you want to implement a feature, follow this steps:
  - Submit a pull request
 
 Pull Requests are really welcome! Others support also.
+
 **Pull Request should have unit tests**
 
 # License
