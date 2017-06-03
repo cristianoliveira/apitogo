@@ -21,7 +21,7 @@ matrix:
       env: GOOS=linux GOARCH=amd64 TARGET=linux-amd64
 
     - os: osx
-      env: GOOS=darwin GOARCH=amd64 TARGET=linux-amd64
+      env: GOOS=darwin GOARCH=amd64 TARGET=darwin-amd64
 
 install:
     - sh ci/install.sh
