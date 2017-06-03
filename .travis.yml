@@ -18,12 +18,10 @@ matrix:
   # Add each target manually
   include:
     - os: linux
-      env: GOOS=linux
-      env: GOARCH=amd64
+      env: GOOS=linux GOARCH=amd64
 
     - os: osx
-      env: GOOS=darwin
-      env: GOARCH=amd64
+      env: GOOS=darwin GOARCH=amd64
 
 install:
     - sh ci/install.sh
