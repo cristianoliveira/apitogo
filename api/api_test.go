@@ -10,6 +10,7 @@ import (
 	"testing"
 
 	"github.com/cristianoliveira/apitogo/api/json"
+	"github.com/cristianoliveira/apitogo/api/store"
 	"github.com/cristianoliveira/apitogo/common"
 )
 
@@ -19,7 +20,7 @@ func TestWhenHasCollectionFile(t *testing.T) {
 		t.Error(err)
 	}
 
-	router := Router()
+	router := Router(store.NewStore())
 	ts := httptest.NewServer(router)
 	defer ts.Close()
 
@@ -76,7 +77,7 @@ func TestWhenHasCollectionFile(t *testing.T) {
 }
 
 func TestWhenHasNoCollectionFile(t *testing.T) {
-	router := Router()
+	router := Router(store.NewStore())
 	ts := httptest.NewServer(router)
 	defer ts.Close()
 
@@ -118,7 +119,7 @@ func TestWhenHasNoCollectionFile(t *testing.T) {
 }
 
 func TestUsingWrongParameters(t *testing.T) {
-	router := Router()
+	router := Router(store.NewStore())
 	ts := httptest.NewServer(router)
 	defer ts.Close()
 
@@ -128,11 +129,11 @@ func TestUsingWrongParameters(t *testing.T) {
 	}
 
 	t.Run("Responds with Bad Request", func(t *testing.T) {
-		expected := http.StatusBadRequest
+		expected := http.StatusNotFound
 		result := resp.StatusCode
 
 		if expected != result {
-			t.Errorf("Expected %d got %d", expected, result)
+			t.Errorf("Expected %d got %d, res: %s", expected, result, resp.Body)
 		}
 	})
 }

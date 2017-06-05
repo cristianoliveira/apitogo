@@ -1,12 +1,17 @@
 package json
 
 import (
+	"encoding/json"
+	"errors"
+	"fmt"
 	"net/http"
-	"strconv"
 
+	"github.com/cristianoliveira/apitogo/api/store"
 	"github.com/cristianoliveira/apitogo/common"
 	"github.com/gorilla/mux"
 )
+
+type Handler func(w http.ResponseWriter, r *http.Request)
 
 func HandleGetAll(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
@@ -31,30 +36,32 @@ func HandleGetAll(w http.ResponseWriter, r *http.Request) {
 	w.Write(data)
 }
 
-func HandleGetById(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.Header().Set("Access-Control-Allow-Origin", "*")
-	settings := common.Settings()
-	vars := mux.Vars(r)
+func HandleGetById(repo *store.Store) Handler {
+	return func(w http.ResponseWriter, r *http.Request) {
+		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+		w.Header().Set("Access-Control-Allow-Origin", "*")
+		vars := mux.Vars(r)
 
-	path := settings.PathFile(vars["collection"])
-	collection, err := CollectionLoad(path)
+		docs, err := repo.Document(fmt.Sprint(vars["collection"], "-", vars["id"]))
+		if err != nil {
+			handleNotFound(w, err)
+			return
+		}
+		if len(docs) == 0 {
+			handleNotFound(w, errors.New("Data not found"))
+			return
+		}
 
-	pId, err := strconv.ParseFloat(vars["id"], 64)
-	if err != nil {
-		handleBadRequest(w, err)
-		return
+		data, err := json.Marshal(docs)
+		if err != nil {
+			handleServerError(w, err)
+			return
+		}
+
+		w.Header().Set("Content-Type", "application/json; charset=UTF-8")
+		w.WriteHeader(http.StatusOK)
+		w.Write(data)
 	}
-
-	selected, err := collection.GetById(pId).AsBytes()
-	if err != nil {
-		handleNotFound(w, err)
-		return
-	}
-
-	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
-	w.WriteHeader(http.StatusOK)
-	w.Write(selected)
 }
 
 func handleNotFound(w http.ResponseWriter, err error) {

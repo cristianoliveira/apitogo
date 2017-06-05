@@ -1,53 +1,53 @@
 package json
 
 import (
-  "encoding/json"
+	"encoding/json"
 	"io/ioutil"
-  "path/filepath"
+	"path/filepath"
 )
 
 type Collection struct {
-  path string
-  data map[string]interface{}
+	path string                 "json:path"
+	data map[string]interface{} "json:data"
 }
 
 func (c *Collection) Name() string {
-  extension := filepath.Ext(c.path)
-  base := filepath.Base(c.path)
-  return base[0:len(base)-len(extension)]
+	extension := filepath.Ext(c.path)
+	base := filepath.Base(c.path)
+	return base[0 : len(base)-len(extension)]
 }
 
-func (c *Collection) AsJson() (map[string]interface{}) {
-  return c.data
+func (c *Collection) AsJson() map[string]interface{} {
+	return c.data
 }
 
 func (c *Collection) AsBytes() ([]byte, error) {
-  return json.Marshal(c.data)
+	return json.Marshal(c.data)
 }
 
-func (c *Collection) Get(key string) (interface{}) {
-  data := c.data[key]
-  return data
+func (c *Collection) Get(key string) interface{} {
+	data := c.data[key]
+	return data
 }
 
-func (c *Collection) GetAsList(key string) ([]interface{}) {
-  return c.data[key].([]interface{})
+func (c *Collection) GetAsList(key string) []interface{} {
+	return c.data[key].([]interface{})
 }
 
 func (c *Collection) GetById(id float64) *Collection {
-  items := c.GetAsList("data")
+	items := c.GetAsList("data")
 
 	for i := range items {
-    item := items[i].(map[string]interface{})
+		item := items[i].(map[string]interface{})
 		if item["id"] == id {
-      return &Collection {
-        path: c.path,
-        data: items[i].(map[string]interface{}),
-      }
+			return &Collection{
+				path: c.path,
+				data: items[i].(map[string]interface{}),
+			}
 		}
 	}
 
-  return &Collection { path: c.path, data: nil }
+	return &Collection{path: c.path, data: nil}
 }
 
 func CollectionLoad(path string) (*Collection, error) {
@@ -59,5 +59,5 @@ func CollectionLoad(path string) (*Collection, error) {
 	var jsonData map[string]interface{}
 	err = json.Unmarshal(data, &jsonData)
 
-  return &Collection { path: path, data: jsonData }, err
+	return &Collection{path: path, data: jsonData}, err
 }
