@@ -17,5 +17,8 @@ start:
 test:
 	@go test ./... -v
 
+watch:
+	find watch
+
 deps:
 	@go list -f '{{join .Imports "\n"}}{{"\n"}}{{join .TestImports "\n"}}' ./... | sort | uniq | grep -v apitogo | go get
